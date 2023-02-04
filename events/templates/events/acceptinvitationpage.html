@@ -1,0 +1,14 @@
+{%extends 'events/base.html'%}
+{%block content%}
+
+<h1>Accept invitation page</h1>
+<form method="POST" action="{%url 'event-join'%}">
+    {%csrf_token%}
+    <div class="mb-3">
+      <label for="formGroupExampleInput" class="form-label">Invite code</label>
+      <input name="code" value="{{code}}" type="text" class="form-control" id="formGroupExampleInput" aria-describedby="emailHelp">
+      <div id="emailHelp" class="form-text">Ask your friend for an invite code if you don't have already</div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+{%endblock%}
