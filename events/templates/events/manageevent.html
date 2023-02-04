@@ -1,0 +1,38 @@
+{%extends 'events/base.html'%}
+
+{%block content%}
+
+<h1 class="text-centre">Manage your events!</h1>
+<br>
+
+
+<div class="list-group">
+    {%if events%}
+
+    {%for event in events%}
+    <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{event.name}}</h5>
+        <small>{{event.date}}</small>
+      </div>
+      <p class="mb-1">{{event.desc}}</p>
+      <ol class="list-group list-group-numbered mb-4">
+        {%for u in event.user.all%}
+        <li class="list-group-item">{{u.username}}</li>
+        <li class="list-group-item">{{u.email}}</li>
+        {%endfor%}
+    </ol>
+      <!-- <small>And some small print.</small> -->
+    </a>
+    {%endfor%}
+
+    {%else%}
+    <h3>You have no events created yet!</h3>
+
+    {%endif%}
+   
+  </div>
+
+
+
+{%endblock%}

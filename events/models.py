@@ -7,7 +7,7 @@ class Event(models.Model):
     desc = models.TextField()
     date = models.DateField(null=True)
     code = models.CharField(default=None,max_length=20)
-    user = models.ManyToManyField(User,blank=True,related_name='invitees')
+    user = models.ManyToManyField(User,blank=True,related_name='invitations')
 
     def __str__(self):
         return self.name

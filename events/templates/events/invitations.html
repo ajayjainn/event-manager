@@ -1,0 +1,17 @@
+{%extends 'events/base.html'%}
+
+{%block content%}
+<h1 class="text-centre">Your invitations!</h1><br>
+<div class="list-group">
+    {%for event in invitations%}
+    <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{event.name}}</h5>
+        <small>On {{event.date}}</small>
+      </div>
+      <p class="mb-1">{{event.desc}}.</p>
+      <small>By {{event.organizer}}</small>
+    </a>
+    {%endfor%}
+  </div>
+{%endblock%}

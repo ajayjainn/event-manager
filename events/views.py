@@ -30,7 +30,15 @@ def join_event(request):
         
     else:
         code = request.GET.get('code','')
-        return render(request,'events/acceptinvitationpage.html',{"code":code})   
+        try:
+            event = Event.objects.get(code=code)
+        except:
+            event=None
+        if code and not event:
+            messages.error(request,"Enter valid invite code")
+            return redirect("event-join")
+        print(event)
+        return render(request,'events/acceptinvitationpage.html',{"event":event})   
         
 def create_event(request):
     if request.method=="POST":
@@ -51,6 +59,25 @@ def create_event(request):
         return redirect('event-home')
     else:
         return render(request,'events/createevent.html')
+
+def manage_event(request):
+    user=request.user 
+    if not request.user.is_authenticated:
+        return redirect('users-login')
+    events = Event.objects.filter(organizer=user.id,date__gte=datetime.date.today())
+    context={"events":events}
+    return render(request,'events/manageevent.html',context=context)
+
+def my_invitations(request):
+    user = request.user
+    if not request.user.is_authenticated:
+        return redirect('users-login')
+    invitation = user.invitations.filter(date__gte=datetime.date.today())
+    return render(request,'events/invitations.html',context={"invitations":invitation})
+
+
+
+    
 
 
 
