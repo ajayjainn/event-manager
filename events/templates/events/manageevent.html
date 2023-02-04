@@ -18,8 +18,8 @@
       <p class="mb-1">{{event.desc}}</p>
       <ol class="list-group list-group-numbered mb-4">
         {%for u in event.user.all%}
-        <li class="list-group-item">{{u.username}}</li>
-        <li class="list-group-item">{{u.email}}</li>
+        <li class="list-group-item">{{u.username}}
+        {{u.email}}</li>
         {%endfor%}
     </ol>
       <!-- <small>And some small print.</small> -->
