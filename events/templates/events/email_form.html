@@ -1,0 +1,16 @@
+{% extends "events/base.html" %}
+
+{% block content %}
+<br><br><br>  
+
+ 
+<form method = "POST" action="{%url 'event-email-send'%}">
+    {%csrf_token%}
+    <div style="position: absolute;left: 35%;" class="form-group">
+      <h4 class='my-2' for="exampleInputEmail1">Invite your friends!</h4><br>
+      <input  name="email" type="email" class="form-control my-2" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+      <button   type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+
+{% endblock content %}

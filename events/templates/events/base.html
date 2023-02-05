@@ -7,71 +7,112 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
-    {%if title%}
-    <title>{{title}}</title>
-    {%else%}
+   
+    <title>Title</title>
+    
     <title>Default</title>
-    {%endif%}
+    
+   <style>
+    .content{
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        text-align: center;
+        color:  black;
+    }
+   
+    .content p{
+        margin: 20px auto;
+        font-weight: 100;
+        line-height: 25px;
+    }
+    button{
+        width: 500px;
+        padding: 15px 0;
+        text-align: center;
+        margin: 20px 10px;
+        border-radius: 1000px;
+        font-weight: bold;
+        border: 4px solid black;
+        background: transparent;
+        border: 4px solid;
+        color: rgb(0, 0, 0);
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    body{
+        width: 100%;
+        height: 100vh;
+        background-image: linear-gradient(rgba(0,0,0,0.40),rgba(0,0,0,0.40)),url(https://media.istockphoto.com/id/1202736228/photo/the-gray-and-silver-are-light-black-with-white-the-gradient-is-the-surface-with-templates.jpg?b=1&s=170667a&w=0&k=20&c=bvfOSh7cAajMFUh3iU3lzWITYSNV1Sfv1dBHuY4uGio=);
+        background-size: cover;
+        background-position: center;
+    }
+    .navbar-brand{
+        font-weight: 200;
+        color:  black;
+        font-size: xx-large;
+        
+    }
+   </style>
+
 </head>
 
 <body> 
-
-    <nav class="navbar navbar-expand-lg --bs-secondary-color border border-dark rounded bg-transparent" >
+    <nav class="  navbar-expand-lg --bs-secondary-color shadow-5-strong background-color-transparent" >
+        <div class="navbar">
       <div class="container-fluid">
         <a class="navbar-brand" href="{%url 'event-home'%}">Event Manager</a>
   
   
   
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+        <button class="navbar-toggler btn btn-dark"  type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
           <span class="navbar-toggler-icon"></span>
         </button>
   
   
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-3 mb-lg-0">
-  
-          </ul>
-  
-  
   
           <nav class="navbar">
-            <span  class="navbar --bs-primary-bg-subtle">
-              {%if user.is_authenticated%}
-              Hello, {{user.username|capfirst}}
-              {%else%}
-              Hello, Visitor 
-              {%endif%}
+            <span  class="navbar --bs-primary-bg-subtle">  
             </span>
           </nav>
   
           <form class="d-flex">
   
+            
             {%if not user.is_authenticated %}
-            <a href="{% url 'signup' %}" class="btn btn-success mx-2">SignUp</a>
-            <a href="{% url 'login' %}" class="btn btn-success">SignIn</a>
+            <a href="#" class="btn btn-dark btn btn-success mx-2">Register</a>
+            <a href="#" class="btn btn-dark btn btn-success">SignIn</a>
   
             {%else%}
   
             {%if user.username == 'ajay' %}
-            <a href='/admin' class="btn btn-success mx-2">Admin</a>
+            <a href='/admin' class="btn btn-dark btn btn-success mx-2">Admin</a>
             {%endif%}
-            <a href="{% url 'logout' %}" class="btn btn-success">Logout</a>
+            <a href="#" class="btn btn-dark btn btn-success">Logout</a>
             {%endif%}
-  
+            
           </form>
         </div>
       </div>
-    </nav>
-      <div class="container">
-        <br>
-        {%if messages%}
-        {%for message in messages%}
-          <div class="alert alert-{{message.tags}}">
-            {{message}}
-          </div>
-        {%endfor%}
-        {%endif%}
-      {%block content%}{%endblock%}
         </div>
+    </nav>
+</div>
+{%if messages%}
+
+{%for message in messages%}
+{%if message.level == DEFAULT_MESSAGE_LEVELS.ERROR%}
+<pre><div class="alert alert-danger" role="alert">{{message}} &#128543</div></pre>
+{%endif%}
+{%if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS%}
+<div class="alert alert-success" role="alert"> {{message}} &#128515&#128077</div>
+{%endif%}
+{% endfor %}
+
+{%endif%}
+    {%block content%}
+    {%endblock%}
   </body>
   </html>

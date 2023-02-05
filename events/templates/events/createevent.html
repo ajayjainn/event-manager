@@ -1,22 +1,25 @@
 {%extends 'events\base.html'%}
 
 {%block content%}
+<br><br>
 <form method="POST" action="{%url 'event-create'%}">
     {%csrf_token%}
+  <div style="position: absolute;left: 25%" >
   <div class="mb-3">
     <label for="formGroupExampleInput" class="form-label">Event Name</label>
-    <input name="name" class="form-control" id="formGroupExampleInput">
+    <input style="width:700px" name="name" class="form-control" id="formGroupExampleInput">
   </div>
   <div class="mb-3">
     <label for="exampleFormControlTextarea1" class="form-label">Event description</label>
-    <textarea name="desc" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    <textarea style="width:700px" name="desc" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
   </div>
 
   <div class="mb-3">
     <label for="formGroupExampleInput" class="form-label">Event Date</label>
-    <input name="date" id="datepicker" type="date" class="form-control" id="formGroupExampleInput"/>
+    <input style="width:700px" name="date" id="datepicker" type="date" class="form-control" id="formGroupExampleInput"/>
   </div>
   
   <button type="submit" class="btn btn-primary">Submit</button>
+</div>
 </form>
 {%endblock%}

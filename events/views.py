@@ -5,7 +5,8 @@ from .models import Event
 import random
 import string
 import datetime
-
+from django.conf import settings
+from django.core.mail import send_mail
 def home(request):
     return render(request,'events/home.html')
 
@@ -56,7 +57,7 @@ def create_event(request):
         ev = Event(organizer=organizer,name=name,desc=desc,date=date,code=code)
         ev.save()
         messages.success(request,f"Event created successfully.\n SHare the link with your friends: http://localhost:8000/events/join-event/?code={code}")
-        return redirect('event-home')
+        return redirect('event-email-send')
     else:
         return render(request,'events/createevent.html')
 
@@ -74,6 +75,22 @@ def my_invitations(request):
         return redirect('users-login')
     invitation = user.invitations.filter(date__gte=datetime.date.today())
     return render(request,'events/invitations.html',context={"invitations":invitation})
+
+def send_email(request) :
+        if request.method=="POST":
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [request.POST.get("email")]
+            event = Event.objects.filter(organizer=request.user).last()
+            subject =f'Invitation for {event.name}'
+            message =f"Hey, {event.organizer} has invited you to an event, {event.name}. The event is about {event.desc}. Please join by clicking here, https://127.1.1.0:8000{('event-join')}?code={event.code}"
+            
+            send_mail(subject, message, email_from, recipient_list ,)
+            return redirect('event-email-send')
+        else:
+            return render(request,'events/email_form.html')
+
+def index(request):
+    return render(request,'events/index.html')
 
 
 

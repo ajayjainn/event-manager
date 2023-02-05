@@ -1,6 +1,13 @@
 {%extends 'events/base.html'%}
 
 {%block content%}
+ <div class="content">
+      <div> 
+        <button onclick="window.location.href= 'create-event/';">Create New Events</button>
+        <button onclick="window.location.href='manage-event/';">Manage My Events</button>
+        <button onclick="window.location.href='join-event';">Accept Invitations</button>
+        <button onclick="window.location.href='my_invitations';">My Invitations</button>
+      </div>
 
-<h1>Events home</h1>
+
 {%endblock%}
