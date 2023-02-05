@@ -8,10 +8,10 @@ import datetime
 from django.conf import settings
 from django.core.mail import send_mail
 def home(request):
-    return render(request,'events/home.html')
+    return render(request,'events/home.html',context={"title":"Home"})
 
 def about(request):
-    return HttpResponse("<h1>Event about</h1>")
+    return render(request,'events/about.html',context={"title":"Our team"})
 
 def join_event(request):
     if request.method=="POST":
@@ -39,7 +39,7 @@ def join_event(request):
             messages.error(request,"Enter valid invite code")
             return redirect("event-join")
         print(event)
-        return render(request,'events/acceptinvitationpage.html',{"event":event})   
+        return render(request,'events/acceptinvitationpage.html',{"event":event,"title":"Join an event"})   
         
 def create_event(request):
     if request.method=="POST":
@@ -59,22 +59,22 @@ def create_event(request):
         messages.success(request,f"Event created successfully.\n SHare the link with your friends: http://localhost:8000/events/join-event/?code={code}")
         return redirect('event-email-send')
     else:
-        return render(request,'events/createevent.html')
+        return render(request,'events/createevent.html',context={"title":"Create an event"})
 
 def manage_event(request):
     user=request.user 
     if not request.user.is_authenticated:
-        return redirect('users-login')
+        return redirect('login')
     events = Event.objects.filter(organizer=user.id,date__gte=datetime.date.today())
-    context={"events":events}
-    return render(request,'events/manageevent.html',context=context)
+    context={"events":events,"title":"Manage Events"}
+    return render(request,'events/management.html',context=context)
 
 def my_invitations(request):
     user = request.user
     if not request.user.is_authenticated:
-        return redirect('users-login')
+        return redirect('login')
     invitation = user.invitations.filter(date__gte=datetime.date.today())
-    return render(request,'events/invitations.html',context={"invitations":invitation})
+    return render(request,'events/invitations.html',context={"invitations":invitation,"title":"My invitations"})
 
 def send_email(request) :
         if request.method=="POST":
@@ -87,10 +87,12 @@ def send_email(request) :
             send_mail(subject, message, email_from, recipient_list ,)
             return redirect('event-email-send')
         else:
-            return render(request,'events/email_form.html')
+            return render(request,'events/email_form.html',context={"title":"Send an email"})
 
 def index(request):
-    return render(request,'events/index.html')
+    return render(request,'events/index.html',context={"title":"Event-Management"})
+
+
 
 
 

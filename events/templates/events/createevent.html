@@ -1,6 +1,7 @@
 {%extends 'events\base.html'%}
 
 {%block content%}
+<h2 style="text-align: center;">Create a new event</h3>
 <br><br>
 <form method="POST" action="{%url 'event-create'%}">
     {%csrf_token%}

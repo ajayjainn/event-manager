@@ -2,6 +2,9 @@
 {%block content%}
 
 <h1 style="text-align: center;">Accept Invitation</h1><br>
+<div style="width:50rem;margin: 0 auto;
+float: none;
+margin-bottom: 10px;">
 {%if event%}
 <form method="POST" action="{%url 'event-join'%}">
 {%csrf_token%}
@@ -41,5 +44,6 @@
           <button style="width:20%"  type="submit"class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Submit</button>  
         </div>  
         
+      </div>
   {%endif%}
 {%endblock%}
