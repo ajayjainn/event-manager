@@ -7,6 +7,7 @@ import string
 import datetime
 from django.conf import settings
 from django.core.mail import send_mail
+from urllib.parse import quote
 def home(request):
     return render(request,'events/home.html',context={"title":"Home"})
 
@@ -82,7 +83,11 @@ def send_email(request) :
             recipient_list = [request.POST.get("email")]
             event = Event.objects.filter(organizer=request.user).last()
             subject =f'Invitation for {event.name}'
-            message =f"Hey, {event.organizer} has invited you to an event, {event.name}. The event is about {event.desc}. Please join by clicking here, https://127.1.1.0:8000{('event-join')}?code={event.code}"
+            date = datetime.datetime.strftime(event.date,"%Y%m%d")
+            end_date = datetime.datetime.strftime(event.date+datetime.timedelta(days=1),"%Y%m%d")
+
+            message =f"Hey, {event.organizer} has invited you to an event, {event.name}. The event is about {event.desc}. Please join by clicking here, https://127.1.1.0:8000/{('event-join')}?code={event.code}\n Add to your calendar: https://calendar.google.com/calendar/r/eventedit?text={quote(event.name)}&details={quote(event.desc)}&dates={date}/{end_date}"
+            
             
             send_mail(subject, message, email_from, recipient_list ,)
             return redirect('event-email-send')
